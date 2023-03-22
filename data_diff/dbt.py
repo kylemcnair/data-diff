@@ -117,7 +117,7 @@ def dbt_diff(
 
     if is_tracking_enabled():
         event_json = create_end_event_json({"dbt_user_id": dbt_parser.dbt_user_id})
-        run_as_daemon(send_event_json, event_json)
+        run_as_daemon(end_event_json, event_json)
 
 def _get_diff_vars(
     dbt_parser: "DbtParser",
