@@ -80,6 +80,7 @@ def dbt_diff(
     custom_schemas = datadiff_variables.get("custom_schemas")
     # custom schemas is default dbt behavior, so default to True if the var doesn't exist
     custom_schemas = True if custom_schemas is None else custom_schemas
+    dbt_user_id = dbt_parser.get_dbt_user_id("dbt_user_id")
 
     if not is_cloud:
         dbt_parser.set_connection()
@@ -278,6 +279,7 @@ def _cloud_diff(diff_vars: DiffVars) -> None:
                 error=err_message,
                 diff_id=diff_id,
                 is_cloud=True,
+                dbt_user_id="",
             )
             send_event_json(event_json)
 
@@ -326,6 +328,15 @@ class DbtParser:
 
         rich.print(f"Found {str(len(models))} successful model runs from the last dbt command.")
         return models
+
+    def get_dbt_user_id(self):
+        with open(DbtParser.project_dir / MANIFEST_PATH) as manifest:
+            manifest_dict = json.load(manifest)
+            manifest_obj = self.parse_manifest(manifest=manifest_dict)
+
+        dbt_user_id = parse_version(manifest_obj.metadata.user_id)
+
+        return dbt_user_id
 
     def get_primary_keys(self, model):
         return list((x.name for x in model.columns.values() if "primary-key" in x.tags))
