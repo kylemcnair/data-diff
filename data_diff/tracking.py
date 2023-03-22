@@ -78,7 +78,6 @@ def create_start_event_json(diff_options: Dict[str, Any]):
             "diff_options": diff_options,
             "data_diff_version:": __version__,
             "entrypoint_name": entrypoint_name,
-            "dbt_user_id": "1234"
         },
     }
 
