@@ -77,6 +77,7 @@ def dbt_diff(
     set_entrypoint_name("CLI-dbt")
     dbt_parser = DbtParser(profiles_dir_override, project_dir_override, is_cloud)
     models = dbt_parser.get_models()
+    dbt_user_id = dbt_parser.dbt_user_id
     datadiff_variables = dbt_parser.get_datadiff_variables()
     config_prod_database = datadiff_variables.get("prod_database")
     config_prod_schema = datadiff_variables.get("prod_schema")
@@ -114,6 +115,9 @@ def dbt_diff(
 
     rich.print("Diffs Complete!")
 
+    if is_tracking_enabled():
+        event_json = create_end_event_json({"dbt_user_id": dbt_parser.dbt_user_id})
+        run_as_daemon(send_event_json, event_json)
 
 def _get_diff_vars(
     dbt_parser: "DbtParser",
@@ -299,6 +303,7 @@ class DbtParser:
         self.connection = None
         self.project_dict = self.get_project_dict()
         self.manifest_obj = self.get_manifest_obj()
+        self.dbt_user_id = self.manifest_obj.metadata.user_id
         self.requires_upper = False
         self.threads = None
         self.unique_columns = self.get_unique_columns()
