@@ -76,7 +76,6 @@ def dbt_diff(
     profiles_dir_override: Optional[str] = None, project_dir_override: Optional[str] = None, is_cloud: bool = False
 ) -> None:
     set_entrypoint_name("CLI-dbt")
-    set_dbt_user_id(dbt_parser.dbt_user_id)    
     dbt_parser = DbtParser(profiles_dir_override, project_dir_override, is_cloud)
     models = dbt_parser.get_models()
     datadiff_variables = dbt_parser.get_datadiff_variables()
@@ -302,6 +301,7 @@ class DbtParser:
         self.project_dict = self.get_project_dict()
         self.manifest_obj = self.get_manifest_obj()
         self.dbt_user_id = self.manifest_obj.metadata.user_id
+        set_dbt_user_id(self.dbt_user_id)   
         self.requires_upper = False
         self.threads = None
         self.unique_columns = self.get_unique_columns()
