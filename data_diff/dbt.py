@@ -302,7 +302,7 @@ class DbtParser:
         self.project_dict = self.get_project_dict()
         self.manifest_obj = self.get_manifest_obj()
         self.dbt_user_id = self.manifest_obj.metadata.user_id
-        set_dbt_user_id(self.dbt_user_id)
+        #set_dbt_user_id(self.dbt_user_id)
         self.requires_upper = False
         self.threads = None
         self.unique_columns = self.get_unique_columns()
