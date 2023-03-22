@@ -76,7 +76,8 @@ def dbt_diff(
     profiles_dir_override: Optional[str] = None, project_dir_override: Optional[str] = None, is_cloud: bool = False
 ) -> None:
     set_entrypoint_name("CLI-dbt")
-    set_dbt_user_id(DbtParser.dbt_user_id)
+    set_dbt_user_id("test test")
+    # set_dbt_user_id(dbt_parser.dbt_user_id)    
     dbt_parser = DbtParser(profiles_dir_override, project_dir_override, is_cloud)
     models = dbt_parser.get_models()
     datadiff_variables = dbt_parser.get_datadiff_variables()
