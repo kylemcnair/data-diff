@@ -58,7 +58,7 @@ def set_entrypoint_name(s):
 
 dbt_user_id = None
 
-def set_dbt_user_id():
+def set_dbt_user_id(s):
     global dbt_user_id
     dbt_user_id = s
 
