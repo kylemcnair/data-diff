@@ -85,6 +85,7 @@ def dbt_diff(
     custom_schemas = datadiff_variables.get("custom_schemas")
     # custom schemas is default dbt behavior, so default to True if the var doesn't exist
     custom_schemas = True if custom_schemas is None else custom_schemas
+    set_dbt_user_id(dbt_parser.dbt_user_id)
 
     if not is_cloud:
         dbt_parser.set_connection()
@@ -284,7 +285,6 @@ def _cloud_diff(diff_vars: DiffVars) -> None:
                 error=err_message,
                 diff_id=diff_id,
                 is_cloud=True,
-                dbt_user_id="test",
             )
             send_event_json(event_json)
 
@@ -302,7 +302,7 @@ class DbtParser:
         self.project_dict = self.get_project_dict()
         self.manifest_obj = self.get_manifest_obj()
         self.dbt_user_id = self.manifest_obj.metadata.user_id
-        set_dbt_user_id(self.dbt_user_id)   
+        set_dbt_user_id(self.dbt_user_id)
         self.requires_upper = False
         self.threads = None
         self.unique_columns = self.get_unique_columns()
