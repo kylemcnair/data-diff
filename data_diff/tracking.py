@@ -78,6 +78,7 @@ def create_start_event_json(diff_options: Dict[str, Any]):
             "diff_options": diff_options,
             "data_diff_version:": __version__,
             "entrypoint_name": entrypoint_name,
+            "dbt_user_id": "1234"
         },
     }
 
@@ -112,6 +113,7 @@ def create_end_event_json(
             "entrypoint_name": entrypoint_name,
             "is_cloud": is_cloud,
             "diff_id": diff_id,
+            "dbt_user_id": "456"
         },
     }
 
@@ -122,7 +124,8 @@ def send_event_json(event_json):
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Basic MkhndE00SGNxOUJtZWlDcU5ZaHo3Tzl0a2pNOg==",
+        #"Authorization": "Basic MkhndE00SGNxOUJtZWlDcU5ZaHo3Tzl0a2pNOg==", #prod
+        "Authorization": "Basic MkhnZ2o5NWhOc0JzeFNBNW1IaXJQYkk5d3pXOg==",
     }
     data = json.dumps(event_json).encode()
     try:
