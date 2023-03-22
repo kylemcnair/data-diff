@@ -284,6 +284,7 @@ def _cloud_diff(diff_vars: DiffVars) -> None:
                 error=err_message,
                 diff_id=diff_id,
                 is_cloud=True,
+                dbt_user_id="test",
             )
             send_event_json(event_json)
 
