@@ -116,10 +116,7 @@ def dbt_diff(
     rich.print("Diffs Complete!")
 
     if is_tracking_enabled():
-        event_json = create_end_event_json({"dbt_user_id":  "test test"})
-        #        event_json = create_end_event_json({"dbt_user_id":  dbt_parser.dbt_user_id})
-
-        run_as_daemon(send_event_json, event_json)
+        create_end_event_json.update({"dbt_user_id":  "test test"})
 
 def _get_diff_vars(
     dbt_parser: "DbtParser",
