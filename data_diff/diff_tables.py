@@ -136,19 +136,22 @@ class DiffResultWrapper:
 
         return DiffStats(diff_by_sign, table1_count, table2_count, unchanged, diff_percent, extra_column_diffs)
 
-    def get_stats_string(self, is_dbt: bool = False):
-        diff_stats = self._get_stats(is_dbt)
+    def __init__(self, diff_by_sign, table1_count, table2_count, unchanged, diff_percent, extra_column_diffs=None):
+        self.diff_by_sign = diff_by_sign
+        self.table1_count = table1_count
+        self.table2_count = table2_count
+        self.unchanged = unchanged
+        self.diff_percent = diff_percent
+        self.extra_column_diffs = extra_column_diffs
 
+    def get_stats_string(self, is_dbt=False):
+        diff_stats = self._get_stats(is_dbt)
         if is_dbt:
             string_output = dbt_diff_string_template(
                 humanfriendly.format_number(diff_stats.diff_by_sign["-"]),
                 humanfriendly.format_number(diff_stats.diff_by_sign["+"]),
                 humanfriendly.format_number(diff_stats.diff_by_sign["!"]),
                 humanfriendly.format_number(diff_stats.unchanged),
-                # diff_stats.diff_by_sign["-"],
-                # diff_stats.diff_by_sign["+"],
-                # diff_stats.diff_by_sign["!"],
-                # diff_stats.unchanged,
                 diff_stats.extra_column_diffs,
                 "Values Updated:",
             )
