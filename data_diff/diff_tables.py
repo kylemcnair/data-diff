@@ -144,11 +144,12 @@ class DiffResultWrapper:
                 f"{diff_stats.diff_by_sign['+']:,}",
                 f"{diff_stats.diff_by_sign['!']:,}",
                 f"{diff_stats.unchanged:,}",
+                f"{diff_stats.extra_column_diffs:,}",
                 # diff_stats.diff_by_sign["-"],
                 # diff_stats.diff_by_sign["+"],
                 # diff_stats.diff_by_sign["!"],
                 # diff_stats.unchanged,
-                diff_stats.extra_column_diffs,
+                #diff_stats.extra_column_diffs,
                 "Values Updated:",
             )
 
