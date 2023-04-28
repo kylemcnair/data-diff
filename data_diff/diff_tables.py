@@ -3,6 +3,7 @@
 
 import re
 import time
+import humanfriendly
 from abc import ABC, abstractmethod
 from enum import Enum
 from contextlib import contextmanager
@@ -140,16 +141,15 @@ class DiffResultWrapper:
 
         if is_dbt:
             string_output = dbt_diff_string_template(
-                f"{diff_stats.diff_by_sign['-']:,}",
-                f"{diff_stats.diff_by_sign['+']:,}",
-                f"{diff_stats.diff_by_sign['!']:,}",
-                f"{diff_stats.unchanged:,}",
-                f"{diff_stats.extra_column_diffs:,}",
+                humanfriendly.format_number(diff_stats.diff_by_sign["-"]),
+                humanfriendly.format_number(diff_stats.diff_by_sign["+"]),
+                humanfriendly.format_number(diff_stats.diff_by_sign["!"]),
+                humanfriendly.format_number(diff_stats.unchanged),
                 # diff_stats.diff_by_sign["-"],
                 # diff_stats.diff_by_sign["+"],
                 # diff_stats.diff_by_sign["!"],
                 # diff_stats.unchanged,
-                #diff_stats.extra_column_diffs,
+                diff_stats.extra_column_diffs,
                 "Values Updated:",
             )
 
